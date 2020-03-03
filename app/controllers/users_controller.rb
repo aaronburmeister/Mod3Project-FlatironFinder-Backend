@@ -1,9 +1,7 @@
 class UsersController < ApplicationController
+    before_action :authenticate, only: :index
 
     def index
-        begin
-            authenticate()
-
             @users = User.all
 
             render json: @users
