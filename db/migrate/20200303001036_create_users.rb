@@ -10,6 +10,7 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.string :github
       t.string :linkedin
       t.string :blog
+      t.string :profile_pic
 
       t.timestamps
     end

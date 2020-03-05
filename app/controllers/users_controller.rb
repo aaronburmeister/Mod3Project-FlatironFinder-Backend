@@ -1,15 +1,14 @@
 class UsersController < ApplicationController
-    before_action :authenticate, only: :index
+    # before_action :authenticate, only: :index
 
     def index
-            @users = User.all
+        @users = User.all
 
-            render json: @users
-        end
+        render json: @users, include: [:frameworks, :languages] 
     end
 
     def create
-        @user = User.create(
+        @user = User.create({
             username: params[:username],
             password: params[:password],
             name: params[:name],
@@ -18,10 +17,11 @@ class UsersController < ApplicationController
             cohort: params[:cohort],
             linkedin: params[:linkedin],
             github: params[:github],
-            blog: params[:blog]
-        )
+            blog: params[:blog],
+            profile_pic: params[:profile_pic]
+        })
 
-        render json: { @user, include: [:languages, :frameworks] }
+        render json: @user 
     end
 
 end
