@@ -2,7 +2,33 @@ class UsersController < ApplicationController
     # before_action :authenticate, only: :index
 
     def index
-        @users = User.all
+        if params[:search] != nil
+            if params[:filter] == "cohort"
+                @users = User.where("cohort LIKE ?", "%#{params[:search]}%")
+            elsif params[:filter] == "campus"
+                @users = User.where("campus LIKE ?", "%#{params[:search]}%")
+            elsif params[:filter] == "framework"
+                sql = <<-SQL
+                SELECT users.*, frameworks.name AS framework_name FROM users INNER JOIN user_frameworks ON user_frameworks.user_id = users.id INNER JOIN frameworks ON frameworks.id = user_frameworks.framework_id
+                SQL
+
+                sql += " WHERE frameworks.name ILIKE '%#{params[:search]}%'"
+
+                @users = ActiveRecord::Base.connection.execute(sql)
+            elsif params[:filter] == "language"
+                sql = <<-SQL
+                SELECT users.*, languages.name AS language_name FROM users 
+                INNER JOIN user_languages ON user_languages.user_id = users.id 
+                INNER JOIN frameworks ON languages.id = user_languages.language_id
+                SQL
+
+                sql += " WHERE languages.name ILIKE '%#{params[:search]}%'"
+
+                @users = ActiveRecord::Base.connection.execute(sql)
+            end
+        else
+            @users = User.all
+        end
 
         render json: @users, include: [:frameworks, :languages] 
     end
