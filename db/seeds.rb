@@ -38,7 +38,7 @@ revel = Framework.create(name: "Revel", language: golang)
 beego = Framework.create(name: "Beego", language: golang)
 ktor = Framework.create(name: "Ktor", language: kotlin)
 
-fake_brad = User.create(username: "fakebrad", password: "fakebrad", name: "Bradley Haley", email: "bradley@bradleyhaley.net", cohort: "Git Bits or Die Prying", campus: "Denver, CO", github: "https://github.com/bshaley25", linkedin: "https://www.linkedin.com/in/bradley-haley-44a85b19a/", profile_pic: "./images/profilePics/brad.jpeg")
+fake_brad = User.create(username: "fakebrad", password: "fakebrad", name: "Bradley Haley", email: "bradley@bradleyhaley.net", cohort: "Git Bits or Die Prying", campus: "Denver, CO", github: "https://github.com/bshaley25", linkedin: "https://www.linkedin.com/in/bradley-haley-44a85b19a/")
 fake_jeremy = User.create(username: "fakejeremy", password: "hockeyrules", name: "Jeremy Gray", email: "Jeremy@Jeremy.net", cohort: "Git Bits or Die Prying", campus: "Denver, CO", github: "https://github.com/jtgray6", linkedin: "https://www.linkedin.com/in/jeremytgray6/", blog: "https://medium.com/@jeremytgray6")
 fake_corey = User.create(username: "fakecorey", password: "coreybrah", name: "Corey Hodge", email: "Corey@CoreyHodge.net", cohort: "Git Bits or Die Prying", campus: "Denver, CO", github: "https://github.com/WordsPerMinute", linkedin: "https://www.linkedin.com/in/coreyhodge/", blog: "https://medium.com/@coreyhodgedotnet")
 fake_kyle = User.create(username: "fakekyle", password: "letsgetitstartedinhere", name: "Kyle Coberly", email: "kyle@kylecoberly.net", campus: "Denver, CO", github: "https://github.com/kylecoberly", linkedin: "https://www.linkedin.com/in/kylecoberly/", blog: "https://medium.com/@kyle.coberly")
