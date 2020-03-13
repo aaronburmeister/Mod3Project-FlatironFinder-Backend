@@ -50,6 +50,9 @@ class UsersController < ApplicationController
         user_languages = UserLanguage.where(user_id: params[:id])
         user_frameworks.each{ |relationship| relationship.destroy}
         user_languages.each{ |relationship| relationship.destroy}
+        # public_id = flatiron_finder_profile_pics/image_name
+        public_id = @user.profile_pic.split('/')[7] + '/' + @user.profile_pic.split('/')[8].split('.')[0]
+        Cloudinary::Uploader.destroy(public_id, options = { invalidate: true })
         @user.destroy
 
         render json: { user: @user2 }

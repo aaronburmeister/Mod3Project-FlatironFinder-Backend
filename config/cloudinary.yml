@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: oneflatboi
+  api_key: '789554783526169'
+  api_secret: BDvxT77yG3jh9mMv3M8kGu5nuU4
+  enhance_image_tag: true
+  static_file_support: false
+production:
+  cloud_name: oneflatboi
+  api_key: '789554783526169'
+  api_secret: BDvxT77yG3jh9mMv3M8kGu5nuU4
+  enhance_image_tag: true
+  static_file_support: true
+test:
+  cloud_name: oneflatboi
+  api_key: '789554783526169'
+  api_secret: BDvxT77yG3jh9mMv3M8kGu5nuU4
+  enhance_image_tag: true
+  static_file_support: false
