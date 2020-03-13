@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    # before_action :authenticate, only: :index
+    before_action :authenticate, only: [:delete, :update]
 
     def index
         if params[:search] != nil
@@ -40,6 +40,19 @@ class UsersController < ApplicationController
         else
             render json: { error: @user.errors.messages }
         end
+    end
+
+    def destroy
+        @user = User.find(params[:id])
+        @user2 = @user
+
+        user_frameworks = UserFramework.where(user_id: params[:id])
+        user_languages = UserLanguage.where(user_id: params[:id])
+        user_frameworks.each{ |relationship| relationship.destroy}
+        user_languages.each{ |relationship| relationship.destroy}
+        @user.destroy
+
+        render json: { user: @user2 }
     end
 
     private
