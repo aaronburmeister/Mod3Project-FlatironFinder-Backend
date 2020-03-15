@@ -26,16 +26,45 @@ class UsersController < ApplicationController
     def show
         @user = User.find(params[:id])
 
-        render json: { user: @user }
+        render json: @user, include: [:frameworks, :languages]
     end
 
     def create
-
         @user = User.new(user_params)
 
         if @user.valid?
             @user.save
-            addTechnologies(framework_params, language_params)
+            begin
+                addTechnologies(framework_params, language_params)
+            rescue
+                begin
+                    addTechnologies([], language_params)
+                rescue
+                    addTechnologies([], [])
+                end
+            end
+            render json: @user , include: [:frameworks, :languages]
+        else
+            render json: { error: @user.errors.messages }
+        end
+    end
+
+    def update
+        @user = User.update(params[:id], user_params)
+
+        if @user.valid?
+            begin
+                updateLanguages(language_params, @user)
+            rescue
+                updateLanguages([], @user)
+            end
+
+            begin
+                updateFrameworks(framework_params, @user)
+            rescue
+                updateFrameworks([], @user)
+            end
+
             render json: @user , include: [:frameworks, :languages]
         else
             render json: { error: @user.errors.messages }
@@ -59,6 +88,50 @@ class UsersController < ApplicationController
     end
 
     private
+
+    def updateFrameworks(new_frameworks, user)
+        # Get list of frameworks known by user currently
+        list_of_user_frameworks = UserFramework.where(user: user)
+        framework_ids = list_of_user_frameworks.map { |relationship|
+            relationship.framework_id
+        }
+
+        # Add frameworks if they don't already exist
+        new_frameworks.each{ |id| 
+            if !framework_ids.include?(id)
+                newF = UserFramework.create(user: user, framework_id: id)
+            end
+        }
+
+        # Remove framework if it isn't in the updated list
+        framework_ids.each { |id|
+            if !new_frameworks.include?(id)
+                UserFramework.find_by(user: user, framework_id: id).destroy
+            end
+        }
+    end
+
+    def updateLanguages(new_languages, user)
+        # Get list of languages known by user currently
+        list_of_user_languages = UserLanguage.where(user: user)
+        language_ids = list_of_user_languages.map { |relationship|
+            relationship.language_id
+        }
+
+        # Add languages if they don't already exist
+        new_languages.each{ |id| 
+            if !language_ids.include?(id)
+                newL = UserLanguage.create(user: user, language_id: id)
+            end
+        }
+
+        # Remove language if it isn't in the updated list
+        language_ids.each { |id|
+            if !new_languages.include?(id)
+                UserLanguage.find_by(user: user, language_id: id).destroy
+            end
+        }
+    end
 
     def addFrameworks(user_frameworks)
         user_frameworks.each{ |framework_id|

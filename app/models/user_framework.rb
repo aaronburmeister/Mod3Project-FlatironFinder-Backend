@@ -4,7 +4,7 @@ class UserFramework < ApplicationRecord
 
   validate :has_language
     private def has_language
-      if !user.languages.includes(framework.language)
+      if !user.languages.include?(framework.language)
         errors.add(:framework, "Cannot add framework without associated language")
       end
     end
