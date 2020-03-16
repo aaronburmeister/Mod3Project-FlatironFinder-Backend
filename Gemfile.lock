@@ -178,7 +178,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.2)
-  bundler
+  bundler (~> 2.0.2)
   byebug
   cloudinary (~> 1.13)
   fast_jsonapi
@@ -196,4 +196,4 @@ RUBY VERSION
    ruby 2.6.1p33
 
 BUNDLED WITH
-   2.1.4
+   2.0.2
