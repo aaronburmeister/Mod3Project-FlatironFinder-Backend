@@ -4,17 +4,17 @@ class UsersController < ApplicationController
     def index
         if params[:search] != nil
             if params[:filter] == "cohort"
-                @users = User.where("cohort ILIKE ?", "%#{params[:search]}%")
+                @users = User.where("cohort ILIKE ?", "%#{params[:search]}%").uniq
             elsif params[:filter] == "campus"
-                @users = User.where("campus ILIKE ?", "%#{params[:search]}%")
+                @users = User.where("campus ILIKE ?", "%#{params[:search]}%").uniq
             elsif params[:filter] == "framework"
                 # SELECT users.*, frameworks.name AS framework_name FROM users INNER JOIN user_frameworks ON user_frameworks.user_id = users.id INNER JOIN frameworks ON frameworks.id = user_frameworks.framework_id
-                @users = User.joins(:frameworks).where("frameworks.name ILIKE '%#{params[:search]}%'")
+                @users = User.joins(:frameworks).where("frameworks.name ILIKE '%#{params[:search]}%'").uniq
             elsif params[:filter] == "language"
                 # SELECT users.*, languages.name AS language_name FROM users INNER JOIN user_languages ON user_languages.user_id = users.id INNER JOIN frameworks ON languages.id = user_languages.language_id
-                @users = User.joins(:languages).where("languages.name ILIKE '%#{params[:search]}%'")
+                @users = User.joins(:languages).where("languages.name ILIKE '%#{params[:search]}%'").uniq
             elsif params[:filter] == "name"
-                @users = User.where("name ILIKE ?", "%#{params[:search]}%")
+                @users = User.where("name ILIKE ?", "%#{params[:search]}%").uniq
             end
         else
             @users = User.all
