@@ -146,8 +146,8 @@ class UsersController < ApplicationController
     end
 
     def addTechnologies(user_frameworks, user_languages)
-        addFrameworks(user_frameworks)
         addLanguages(user_languages)
+        addFrameworks(user_frameworks)
     end
 
 
